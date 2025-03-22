@@ -1,0 +1,56 @@
+{
+    "Prosthetic": {
+        "checkpoints": [
+            {
+                "steps": 499968,
+                "file_path": "results\\prs_13\\Prosthetic\\Prosthetic-499968.onnx",
+                "reward": null,
+                "creation_time": 1741897364.7945163,
+                "auxillary_file_paths": [
+                    "results\\prs_13\\Prosthetic\\Prosthetic-499968.pt"
+                ]
+            },
+            {
+                "steps": 999872,
+                "file_path": "results\\prs_13\\Prosthetic\\Prosthetic-999872.onnx",
+                "reward": null,
+                "creation_time": 1741897920.1107533,
+                "auxillary_file_paths": [
+                    "results\\prs_13\\Prosthetic\\Prosthetic-999872.pt"
+                ]
+            },
+            {
+                "steps": 1499904,
+                "file_path": "results\\prs_13\\Prosthetic\\Prosthetic-1499904.onnx",
+                "reward": null,
+                "creation_time": 1741898589.576065,
+                "auxillary_file_paths": [
+                    "results\\prs_13\\Prosthetic\\Prosthetic-1499904.pt"
+                ]
+            },
+            {
+                "steps": 1546752,
+                "file_path": "results\\prs_13\\Prosthetic\\Prosthetic-1546752.onnx",
+                "reward": 0.35000000645716983,
+                "creation_time": 1741898801.0291877,
+                "auxillary_file_paths": [
+                    "results\\prs_13\\Prosthetic\\Prosthetic-1546752.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1546752,
+            "file_path": "results\\prs_13\\Prosthetic.onnx",
+            "reward": 0.35000000645716983,
+            "creation_time": 1741898801.0291877,
+            "auxillary_file_paths": [
+                "results\\prs_13\\Prosthetic\\Prosthetic-1546752.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}
