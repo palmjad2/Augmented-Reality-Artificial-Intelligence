@@ -32,10 +32,39 @@ public class ArmGraspAgent : Agent
     private bool pinkyEndInContact = false;
     private bool thumbInContact = false;
 
+    // Flags to know if a collider has contacted at least once (to enable punishment on release)
+    private bool pointerBaseHadContact = false;
+    private bool pointerEndHadContact = false;
+    private bool middleBaseHadContact = false;
+    private bool middleEndHadContact = false;
+    private bool ringBaseHadContact = false;
+    private bool ringEndHadContact = false;
+    private bool pinkyBaseHadContact = false;
+    private bool pinkyEndHadContact = false;
+    private bool thumbHadContact = false;
+
+    // Reward-added flags to ensure continuous reward is added only once per fixed update per collider
+    private bool pointerBaseRewardAdded = false;
+    private bool pointerEndRewardAdded = false;
+    private bool middleBaseRewardAdded = false;
+    private bool middleEndRewardAdded = false;
+    private bool ringBaseRewardAdded = false;
+    private bool ringEndRewardAdded = false;
+    private bool pinkyBaseRewardAdded = false;
+    private bool pinkyEndRewardAdded = false;
+    private bool thumbRewardAdded = false;
+
+    // Reward rates
+    // Immediate reward on contact: 0.1; continuous reward: 0.001 per 5 seconds = 0.001/5 per second.
+    // Punishment on release after contact: -0.02.
+    private const float immediateReward = 0.1f;
+    private const float punishmentReward = -0.02f;
+    private const float continuousRewardRate = 0.001f / 5f;
+
     // Called once at the beginning
     public override void Initialize()
     {
-        // Any additional initialization if needed
+        // Any additional initialization if needed.
     }
 
     // Reset logic when each new episode begins
@@ -52,7 +81,7 @@ public class ArmGraspAgent : Agent
         pinkyEnd.localRotation = Quaternion.identity;
         thumb.localRotation = Quaternion.identity;
 
-        // Reset contact booleans
+        // Reset contact booleans and "had contact" flags
         pointerBaseInContact = false;
         pointerEndInContact = false;
         middleBaseInContact = false;
@@ -62,6 +91,30 @@ public class ArmGraspAgent : Agent
         pinkyBaseInContact = false;
         pinkyEndInContact = false;
         thumbInContact = false;
+
+        pointerBaseHadContact = false;
+        pointerEndHadContact = false;
+        middleBaseHadContact = false;
+        middleEndHadContact = false;
+        ringBaseHadContact = false;
+        ringEndHadContact = false;
+        pinkyBaseHadContact = false;
+        pinkyEndHadContact = false;
+        thumbHadContact = false;
+    }
+
+    // Reset continuous reward flags every fixed update
+    private void FixedUpdate()
+    {
+        pointerBaseRewardAdded = false;
+        pointerEndRewardAdded = false;
+        middleBaseRewardAdded = false;
+        middleEndRewardAdded = false;
+        ringBaseRewardAdded = false;
+        ringEndRewardAdded = false;
+        pinkyBaseRewardAdded = false;
+        pinkyEndRewardAdded = false;
+        thumbRewardAdded = false;
     }
 
     // Collect observations: each collider's contact state (9 total observations)
@@ -173,68 +226,159 @@ public class ArmGraspAgent : Agent
             rotateThumbZ * rotationSpeed * Time.deltaTime);
     }
 
-    // Collision detection: reward immediately when a collider touches the cylinder
+    // In OnCollisionStay we add both immediate reward on first contact and a continuous time gradient reward.
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Cylinder"))
         {
+            // Calculate continuous reward amount for this fixed update
+            float continuousReward = continuousRewardRate * Time.fixedDeltaTime;
+
             foreach (ContactPoint contact in collision.contacts)
             {
                 if (contact.thisCollider != null)
                 {
-                    if (contact.thisCollider.gameObject == pointerBase.gameObject && !pointerBaseInContact)
+                    // Pointer Base
+                    if (contact.thisCollider.gameObject == pointerBase.gameObject)
                     {
-                        pointerBaseInContact = true;
-                        AddReward(0.1f);
+                        if (!pointerBaseInContact)
+                        {
+                            pointerBaseInContact = true;
+                            pointerBaseHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!pointerBaseRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            pointerBaseRewardAdded = true;
+                        }
                     }
-                    else if (contact.thisCollider.gameObject == pointerEnd.gameObject && !pointerEndInContact)
+                    // Pointer End
+                    else if (contact.thisCollider.gameObject == pointerEnd.gameObject)
                     {
-                        pointerEndInContact = true;
-                        AddReward(0.1f);
+                        if (!pointerEndInContact)
+                        {
+                            pointerEndInContact = true;
+                            pointerEndHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!pointerEndRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            pointerEndRewardAdded = true;
+                        }
                     }
-                    else if (contact.thisCollider.gameObject == middleBase.gameObject && !middleBaseInContact)
+                    // Middle Base
+                    else if (contact.thisCollider.gameObject == middleBase.gameObject)
                     {
-                        middleBaseInContact = true;
-                        AddReward(0.1f);
+                        if (!middleBaseInContact)
+                        {
+                            middleBaseInContact = true;
+                            middleBaseHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!middleBaseRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            middleBaseRewardAdded = true;
+                        }
                     }
-                    else if (contact.thisCollider.gameObject == middleEnd.gameObject && !middleEndInContact)
+                    // Middle End
+                    else if (contact.thisCollider.gameObject == middleEnd.gameObject)
                     {
-                        Debug.Log("Touched");
-                        middleEndInContact = true;
-                        AddReward(0.1f);
+                        if (!middleEndInContact)
+                        {
+                            middleEndInContact = true;
+                            middleEndHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!middleEndRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            middleEndRewardAdded = true;
+                        }
                     }
-                    else if (contact.thisCollider.gameObject == ringBase.gameObject && !ringBaseInContact)
+                    // Ring Base
+                    else if (contact.thisCollider.gameObject == ringBase.gameObject)
                     {
-                        ringBaseInContact = true;
-                        AddReward(0.1f);
+                        if (!ringBaseInContact)
+                        {
+                            ringBaseInContact = true;
+                            ringBaseHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!ringBaseRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            ringBaseRewardAdded = true;
+                        }
                     }
-                    else if (contact.thisCollider.gameObject == ringEnd.gameObject && !ringEndInContact)
+                    // Ring End
+                    else if (contact.thisCollider.gameObject == ringEnd.gameObject)
                     {
-                        ringEndInContact = true;
-                        AddReward(0.1f);
+                        if (!ringEndInContact)
+                        {
+                            ringEndInContact = true;
+                            ringEndHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!ringEndRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            ringEndRewardAdded = true;
+                        }
                     }
-                    else if (contact.thisCollider.gameObject == pinkyBase.gameObject && !pinkyBaseInContact)
+                    // Pinky Base
+                    else if (contact.thisCollider.gameObject == pinkyBase.gameObject)
                     {
-                        pinkyBaseInContact = true;
-                        AddReward(0.1f);
+                        if (!pinkyBaseInContact)
+                        {
+                            pinkyBaseInContact = true;
+                            pinkyBaseHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!pinkyBaseRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            pinkyBaseRewardAdded = true;
+                        }
                     }
-                    else if (contact.thisCollider.gameObject == pinkyEnd.gameObject && !pinkyEndInContact)
+                    // Pinky End
+                    else if (contact.thisCollider.gameObject == pinkyEnd.gameObject)
                     {
-                        Debug.Log("Touched");
-                        pinkyEndInContact = true;
-                        AddReward(0.1f);
+                        if (!pinkyEndInContact)
+                        {
+                            pinkyEndInContact = true;
+                            pinkyEndHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!pinkyEndRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            pinkyEndRewardAdded = true;
+                        }
                     }
-                    else if (contact.thisCollider.gameObject == thumb.gameObject && !thumbInContact)
+                    // Thumb
+                    else if (contact.thisCollider.gameObject == thumb.gameObject)
                     {
-                        thumbInContact = true;
-                        AddReward(0.1f);
+                        if (!thumbInContact)
+                        {
+                            thumbInContact = true;
+                            thumbHadContact = true;
+                            AddReward(immediateReward);
+                        }
+                        if (!thumbRewardAdded)
+                        {
+                            AddReward(continuousReward);
+                            thumbRewardAdded = true;
+                        }
                     }
                 }
             }
         }
     }
 
-    // Reset contact booleans when a collider stops touching the cylinder
+    // When a collider stops touching the cylinder, if it had been in contact, apply punishment.
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Cylinder"))
@@ -243,40 +387,85 @@ public class ArmGraspAgent : Agent
             {
                 if (contact.thisCollider != null)
                 {
+                    // Pointer Base
                     if (contact.thisCollider.gameObject == pointerBase.gameObject)
                     {
+                        if (pointerBaseInContact && pointerBaseHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        }
                         pointerBaseInContact = false;
                     }
+                    // Pointer End
                     else if (contact.thisCollider.gameObject == pointerEnd.gameObject)
                     {
+                        if (pointerEndInContact && pointerEndHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        }
                         pointerEndInContact = false;
                     }
+                    // Middle Base
                     else if (contact.thisCollider.gameObject == middleBase.gameObject)
                     {
+                        if (middleBaseInContact && middleBaseHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        }
                         middleBaseInContact = false;
                     }
+                    // Middle End
                     else if (contact.thisCollider.gameObject == middleEnd.gameObject)
                     {
+                        if (middleEndInContact && middleEndHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        }
                         middleEndInContact = false;
                     }
+                    // Ring Base
                     else if (contact.thisCollider.gameObject == ringBase.gameObject)
                     {
+                        if (ringBaseInContact && ringBaseHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        }
                         ringBaseInContact = false;
                     }
+                    // Ring End
                     else if (contact.thisCollider.gameObject == ringEnd.gameObject)
                     {
+                        if (ringEndInContact && ringEndHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        }
                         ringEndInContact = false;
                     }
+                    // Pinky Base
                     else if (contact.thisCollider.gameObject == pinkyBase.gameObject)
                     {
+                        if (pinkyBaseInContact && pinkyBaseHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        }
                         pinkyBaseInContact = false;
                     }
+                    // Pinky End
                     else if (contact.thisCollider.gameObject == pinkyEnd.gameObject)
                     {
+                        if (pinkyEndInContact && pinkyEndHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        }
                         pinkyEndInContact = false;
                     }
+                    // Thumb
                     else if (contact.thisCollider.gameObject == thumb.gameObject)
                     {
+                        if (thumbInContact && thumbHadContact)
+                        {
+                            AddReward(punishmentReward);
+                        } 
                         thumbInContact = false;
                     }
                 }
