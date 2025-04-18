@@ -501,6 +501,7 @@ GameObject:
   - component: {fileID: 2346028019397090352}
   - component: {fileID: 9116703560948759460}
   - component: {fileID: 6460158297854322902}
+  - component: {fileID: 3353874582561765154}
   m_Layer: 0
   m_Name: ArmAnimation
   m_TagString: Untagged
@@ -551,7 +552,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: My Behavior
+  m_BehaviorName: Prosthetic
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -571,8 +572,23 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  joints: []
+  MaxStep: 200000
+  joints:
+  - {fileID: 9127999446918996380}
+  - {fileID: 5133882117982143689}
+  - {fileID: 6505667630116481389}
+  - {fileID: 145965447725817162}
+  - {fileID: 3376140661101263728}
+  - {fileID: 7257738971695093359}
+  - {fileID: 1146821748010286043}
+  - {fileID: 1451785207057347052}
+  - {fileID: 5394079982274314833}
+  - {fileID: 7996334617390830440}
+  - {fileID: 8241995864008977040}
+  - {fileID: 3934253211314883238}
+  - {fileID: 232791267636125354}
+  - {fileID: 4817253134356455694}
+  - {fileID: 1892979750089565054}
   rotationSpeed: 90
 --- !u!54 &6460158297854322902
 Rigidbody:
@@ -590,6 +606,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 3
+--- !u!114 &3353874582561765154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056949479757386685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &2066196495833026601
 GameObject:
   m_ObjectHideFlags: 0

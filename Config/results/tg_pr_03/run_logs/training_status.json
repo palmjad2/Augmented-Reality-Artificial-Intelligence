@@ -1,0 +1,65 @@
+{
+    "Prosthetic": {
+        "checkpoints": [
+            {
+                "steps": 198499968,
+                "file_path": "results\\tg_pr_03\\Prosthetic\\Prosthetic-198499968.onnx",
+                "reward": null,
+                "creation_time": 1744399502.3681338,
+                "auxillary_file_paths": [
+                    "results\\tg_pr_03\\Prosthetic\\Prosthetic-198499968.pt"
+                ]
+            },
+            {
+                "steps": 198999872,
+                "file_path": "results\\tg_pr_03\\Prosthetic\\Prosthetic-198999872.onnx",
+                "reward": null,
+                "creation_time": 1744399719.7128925,
+                "auxillary_file_paths": [
+                    "results\\tg_pr_03\\Prosthetic\\Prosthetic-198999872.pt"
+                ]
+            },
+            {
+                "steps": 199499904,
+                "file_path": "results\\tg_pr_03\\Prosthetic\\Prosthetic-199499904.onnx",
+                "reward": 0.554478958210287,
+                "creation_time": 1744399936.9556134,
+                "auxillary_file_paths": [
+                    "results\\tg_pr_03\\Prosthetic\\Prosthetic-199499904.pt"
+                ]
+            },
+            {
+                "steps": 199999936,
+                "file_path": "results\\tg_pr_03\\Prosthetic\\Prosthetic-199999936.onnx",
+                "reward": 0.5280652794754133,
+                "creation_time": 1744400154.1347182,
+                "auxillary_file_paths": [
+                    "results\\tg_pr_03\\Prosthetic\\Prosthetic-199999936.pt"
+                ]
+            },
+            {
+                "steps": 200001216,
+                "file_path": "results\\tg_pr_03\\Prosthetic\\Prosthetic-200001216.onnx",
+                "reward": 0.5280652794754133,
+                "creation_time": 1744400154.2234812,
+                "auxillary_file_paths": [
+                    "results\\tg_pr_03\\Prosthetic\\Prosthetic-200001216.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 200001216,
+            "file_path": "results\\tg_pr_03\\Prosthetic.onnx",
+            "reward": 0.5280652794754133,
+            "creation_time": 1744400154.2234812,
+            "auxillary_file_paths": [
+                "results\\tg_pr_03\\Prosthetic\\Prosthetic-200001216.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.6.0+cpu"
+    }
+}

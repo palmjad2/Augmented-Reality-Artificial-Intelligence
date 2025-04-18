@@ -5,18 +5,23 @@ using Unity.MLAgents.Actuators;
 
 public class ArmGraspAgent : Agent
 {
-    [Header("References")]
-    [Tooltip("Any animated finger/joint transforms—it doesn’t matter which, tags drive logic.")]
-    public Transform[] joints; // you can leave this empty; we rotate by tag, not by array.
-
     [Header("Rotation Settings")]
+    [Tooltip("Degrees of rotation per action unit.")]
     public float rotationSpeed = 90f;
+
+    // Private arrays of Transforms, filled at runtime by tag
+    private Transform[] fingerBaseJoints;
+    private Transform[] fingerMidJoints;
+    private Transform[] fingerEndJoints;
+    private Transform[] thumbBaseJoints;
+    private Transform[] thumbEndJoints;
+    private Transform[] palmJoints;
 
     // Contact state flags
     private bool fingerBaseInContact, fingerMidInContact, fingerEndInContact;
     private bool thumbBaseInContact, thumbEndInContact, palmInContact;
 
-    // “Had contact” flags to gate punishments
+    // “Had contact” flags to gate punishment
     private bool fingerBaseHad, fingerMidHad, fingerEndHad;
     private bool thumbBaseHad, thumbEndHad, palmHad;
 
@@ -24,28 +29,44 @@ public class ArmGraspAgent : Agent
     private bool fbRewarded, fmRewarded, feRewarded;
     private bool tbRewarded, teRewarded, pRewarded;
 
-    // Reward & punishment constants
+    // Reward constants
     const float punishValue = -0.07f;
+    const float baseImmReward = 0.15f;
+    const float midImmReward = 0.10f;
+    const float endImmReward = 0.05f;
+    const float thumbImmReward = 0.20f;
+    const float palmImmReward = 0.25f;
 
-    // Immediate rewards
-    const float baseImmReward = 0.15f;   // Finger base
-    const float midImmReward = 0.10f;   // Finger middle
-    const float endImmReward = 0.05f;   // Finger end
-    const float thumbImmReward = 0.20f;   // Thumb base & end
-    const float palmImmReward = 0.25f;   // Palm highest
-
-    // Continuous (time‑gradient) rates per second
     const float baseContRate = 0.002f / 5f;
     const float midContRate = 0.0015f / 5f;
     const float endContRate = 0.001f / 5f;
     const float thumbContRate = 0.0025f / 5f;
     const float palmContRate = 0.003f / 5f;
 
-    public override void Initialize() { }
+    public override void Initialize()
+    {
+        // Find all joints by tag
+        fingerBaseJoints = FindTransformsWithTag("FingerBase");
+        fingerMidJoints = FindTransformsWithTag("FingerMiddle");
+        fingerEndJoints = FindTransformsWithTag("FingerEnd");
+        thumbBaseJoints = FindTransformsWithTag("ThumbBase");
+        thumbEndJoints = FindTransformsWithTag("ThumbEnd");
+        palmJoints = FindTransformsWithTag("Palm");
+    }
+
+    // Helper to find all Transforms with a given tag
+    private Transform[] FindTransformsWithTag(string tag)
+    {
+        var gos = GameObject.FindGameObjectsWithTag(tag);
+        var ts = new Transform[gos.Length];
+        for (int i = 0; i < gos.Length; i++)
+            ts[i] = gos[i].transform;
+        return ts;
+    }
 
     public override void OnEpisodeBegin()
     {
-        // Reset all contact & hadContact flags
+        // Reset contact flags
         fingerBaseInContact = fingerMidInContact = fingerEndInContact = false;
         thumbBaseInContact = thumbEndInContact = palmInContact = false;
 
@@ -55,14 +76,14 @@ public class ArmGraspAgent : Agent
 
     private void FixedUpdate()
     {
-        // Clear per–step reward flags
+        // Clear per‑step reward guards
         fbRewarded = fmRewarded = feRewarded =
         tbRewarded = teRewarded = pRewarded = false;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Six booleans: one for each tag
+        // 6 booleans, one per tag
         sensor.AddObservation(fingerBaseInContact ? 1f : 0f);
         sensor.AddObservation(fingerMidInContact ? 1f : 0f);
         sensor.AddObservation(fingerEndInContact ? 1f : 0f);
@@ -73,32 +94,31 @@ public class ArmGraspAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        // Expect 42 continuous actions: 14 joints × 3 axes each
+        // 6 continuous actions: index 0→FingerBase, 1→FingerMiddle, 2→FingerEnd,
+        // 3→ThumbBase, 4→ThumbEnd, 5→Palm
         var a = actions.ContinuousActions;
+        float dt = Time.deltaTime;
 
-        // Rotate *all* animated joints in the scene, ignoring order
-        // They must be tagged appropriately in Unity:
-        foreach (var jt in joints)
-        {
-            if (jt == null) continue;
-            var t = jt.tag;
-            // Determine which slice of the 'a' array to use:
-            // you could store a map from tag→(startIndex), or
-            // even better, just animate by your existing mechanism.
-            // Here, for brevity, we show a toy example rotating *all* by the first 3:
-            jt.localRotation *= Quaternion.Euler(
-                a[0] * rotationSpeed * Time.deltaTime,
-                a[1] * rotationSpeed * Time.deltaTime,
-                a[2] * rotationSpeed * Time.deltaTime
-            );
-        }
+        RotateGroup(fingerBaseJoints, a[0], dt);
+        RotateGroup(fingerMidJoints, a[1], dt);
+        RotateGroup(fingerEndJoints, a[2], dt);
+        RotateGroup(thumbBaseJoints, a[3], dt);
+        RotateGroup(thumbEndJoints, a[4], dt);
+        RotateGroup(palmJoints, a[5], dt);
+    }
+
+    // Rotate every transform in the group around its X‑axis
+    private void RotateGroup(Transform[] group, float action, float dt)
+    {
+        float angle = action * rotationSpeed * dt;
+        for (int i = 0; i < group.Length; i++)
+            group[i].localRotation *= Quaternion.Euler(angle, 0f, 0f);
     }
 
     private void OnCollisionStay(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Cylinder")) return;
 
-        // Compute per–step continuous reward
         float dt = Time.fixedDeltaTime;
         float rb = baseContRate * dt;
         float rm = midContRate * dt;
@@ -112,34 +132,28 @@ public class ArmGraspAgent : Agent
             switch (cp.thisCollider.tag)
             {
                 case "FingerBase":
-                    ProcessContact(
-                      ref fingerBaseInContact, ref fingerBaseHad, ref fbRewarded,
-                      baseImmReward, rb);
+                    ProcessContact(ref fingerBaseInContact, ref fingerBaseHad, ref fbRewarded,
+                                   baseImmReward, rb);
                     break;
                 case "FingerMiddle":
-                    ProcessContact(
-                      ref fingerMidInContact, ref fingerMidHad, ref fmRewarded,
-                      midImmReward, rm);
+                    ProcessContact(ref fingerMidInContact, ref fingerMidHad, ref fmRewarded,
+                                   midImmReward, rm);
                     break;
                 case "FingerEnd":
-                    ProcessContact(
-                      ref fingerEndInContact, ref fingerEndHad, ref feRewarded,
-                      endImmReward, re);
+                    ProcessContact(ref fingerEndInContact, ref fingerEndHad, ref feRewarded,
+                                   endImmReward, re);
                     break;
                 case "ThumbBase":
-                    ProcessContact(
-                      ref thumbBaseInContact, ref thumbBaseHad, ref tbRewarded,
-                      thumbImmReward, rt);
+                    ProcessContact(ref thumbBaseInContact, ref thumbBaseHad, ref tbRewarded,
+                                   thumbImmReward, rt);
                     break;
                 case "ThumbEnd":
-                    ProcessContact(
-                      ref thumbEndInContact, ref thumbEndHad, ref teRewarded,
-                      thumbImmReward, rt);
+                    ProcessContact(ref thumbEndInContact, ref thumbEndHad, ref teRewarded,
+                                   thumbImmReward, rt);
                     break;
                 case "Palm":
-                    ProcessContact(
-                      ref palmInContact, ref palmHad, ref pRewarded,
-                      palmImmReward, rp);
+                    ProcessContact(ref palmInContact, ref palmHad, ref pRewarded,
+                                   palmImmReward, rp);
                     break;
             }
         }
@@ -176,7 +190,6 @@ public class ArmGraspAgent : Agent
         }
     }
 
-    // Called when a new collider of this tag touches the cylinder.
     void ProcessContact(
         ref bool inContact,
         ref bool hadContact,
@@ -198,16 +211,10 @@ public class ArmGraspAgent : Agent
         }
     }
 
-    // Called when a collider of this tag stops touching the cylinder.
-    void ProcessRelease(
-        ref bool inContact,
-        ref bool hadContact
-    )
+    void ProcessRelease(ref bool inContact, ref bool hadContact)
     {
         if (inContact && hadContact)
-        {
             AddReward(punishValue);
-        }
         inContact = false;
     }
 }
