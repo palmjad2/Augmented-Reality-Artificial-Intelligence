@@ -25,7 +25,7 @@ public class ArmGraspAgent : Agent
     private bool tbRewarded, teRewarded, pRewarded;
 
     // Reward & punishment constants
-    const float punishValue = -0.02f;
+    const float punishValue = -0.07f;
 
     // Immediate rewards
     const float baseImmReward = 0.15f;   // Finger base
