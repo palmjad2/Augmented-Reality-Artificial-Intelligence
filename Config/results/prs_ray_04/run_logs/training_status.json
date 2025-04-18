@@ -1,0 +1,29 @@
+{
+    "Prosthetic": {
+        "checkpoints": [
+            {
+                "steps": 201216,
+                "file_path": "results\\prs_ray_04\\Prosthetic\\Prosthetic-201216.onnx",
+                "reward": null,
+                "creation_time": 1744958979.8575034,
+                "auxillary_file_paths": [
+                    "results\\prs_ray_04\\Prosthetic\\Prosthetic-201216.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 201216,
+            "file_path": "results\\prs_ray_04\\Prosthetic.onnx",
+            "reward": null,
+            "creation_time": 1744958979.8575034,
+            "auxillary_file_paths": [
+                "results\\prs_ray_04\\Prosthetic\\Prosthetic-201216.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.6.0+cpu"
+    }
+}
