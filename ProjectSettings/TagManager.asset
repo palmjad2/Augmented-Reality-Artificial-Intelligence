@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cylinder
+  - Palm
+  - ThumbEnd
+  - ThumbBase
+  - FingerEnd
+  - FingerMiddle
+  - FingerBase
   layers:
   - Default
   - TransparentFX
