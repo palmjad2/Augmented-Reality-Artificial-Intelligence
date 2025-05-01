@@ -516,8 +516,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056949479757386685}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6923044, y: 0.12272774, z: -1.696}
+  m_LocalRotation: {x: -0.027226077, y: -0, z: -0, w: 0.9996293}
+  m_LocalPosition: {x: -1.687, y: 0.12272774, z: -1.696}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7741904746461960601}
@@ -526,7 +526,7 @@ Transform:
   - {fileID: 4707739390127327724}
   m_Father: {fileID: 7871437604704870979}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -3.12, y: 0, z: 0}
 --- !u!114 &2346028019397090352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,14 +540,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 36
     NumStackedVectorObservations: 1
     m_ActionSpec:
-      m_NumContinuousActions: 0
-      BranchSizes: 01000000
-    VectorActionSize: 01000000
+      m_NumContinuousActions: 5
+      BranchSizes: 
+    VectorActionSize: 05000000
     VectorActionDescriptions: []
-    VectorActionSpaceType: 0
+    VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
@@ -572,23 +572,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 200000
-  joints:
-  - {fileID: 9127999446918996380}
-  - {fileID: 5133882117982143689}
-  - {fileID: 6505667630116481389}
-  - {fileID: 145965447725817162}
-  - {fileID: 3376140661101263728}
-  - {fileID: 7257738971695093359}
-  - {fileID: 1146821748010286043}
-  - {fileID: 1451785207057347052}
-  - {fileID: 5394079982274314833}
-  - {fileID: 7996334617390830440}
-  - {fileID: 8241995864008977040}
-  - {fileID: 3934253211314883238}
-  - {fileID: 232791267636125354}
-  - {fileID: 4817253134356455694}
-  - {fileID: 1892979750089565054}
+  MaxStep: 10000
   rotationSpeed: 90
 --- !u!54 &6460158297854322902
 Rigidbody:
@@ -1946,10 +1930,10 @@ GameObject:
   - component: {fileID: 6069812351190620523}
   - component: {fileID: 6069812351190620524}
   - component: {fileID: 6069812351190620526}
-  - component: {fileID: 6069812351190620520}
+  - component: {fileID: 385912741289822386}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Cylinder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1961,13 +1945,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6069812351190620527}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.97991157, y: 0.014727734, z: -1.6456451}
-  m_LocalScale: {x: 0.064550295, y: 0.58746004, z: 0.08392346}
+  m_LocalRotation: {x: -0.1434929, y: -0, z: -0, w: 0.9896513}
+  m_LocalPosition: {x: 0.941, y: 0.421, z: -1.794}
+  m_LocalScale: {x: 0.11255594, y: 1.0243504, z: 0.14633682}
   m_Children: []
   m_Father: {fileID: 7871437604704870979}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -16.5, y: 0, z: 0}
 --- !u!33 &6069812351190620523
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2033,7 +2017,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &6069812351190620520
+--- !u!65 &385912741289822386
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2044,8 +2028,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0.00000005960464, y: 0, z: -0.00000008940697}
+  m_Size: {x: 1, y: 2, z: 1.0000002}
+  m_Center: {x: 0.000000059604638, y: 0, z: 0.0000075399876}
 --- !u!1 &6069812352919266412
 GameObject:
   m_ObjectHideFlags: 0

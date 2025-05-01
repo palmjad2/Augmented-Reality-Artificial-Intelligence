@@ -19,15 +19,15 @@ public class ArmGraspAgent : Agent
 
     // Contact state flags
     private bool fingerBaseInContact, fingerMidInContact, fingerEndInContact;
-    private bool thumbBaseInContact, thumbEndInContact, palmInContact;
+    private bool thumbBaseInContact, thumbEndInContact;
 
     // “Had contact” flags to gate punishment
     private bool fingerBaseHad, fingerMidHad, fingerEndHad;
-    private bool thumbBaseHad, thumbEndHad, palmHad;
+    private bool thumbBaseHad, thumbEndHad;
 
     // Per–fixedUpdate reward guards
     private bool fbRewarded, fmRewarded, feRewarded;
-    private bool tbRewarded, teRewarded, pRewarded;
+    private bool tbRewarded, teRewarded;
 
     // Reward constants
     const float punishValue = -0.07f;
@@ -35,13 +35,11 @@ public class ArmGraspAgent : Agent
     const float midImmReward = 0.10f;
     const float endImmReward = 0.05f;
     const float thumbImmReward = 0.20f;
-    const float palmImmReward = 0.25f;
 
     const float baseContRate = 0.002f / 5f;
     const float midContRate = 0.0015f / 5f;
     const float endContRate = 0.001f / 5f;
     const float thumbContRate = 0.0025f / 5f;
-    const float palmContRate = 0.003f / 5f;
 
     public override void Initialize()
     {
@@ -51,7 +49,6 @@ public class ArmGraspAgent : Agent
         fingerEndJoints = FindTransformsWithTag("FingerEnd");
         thumbBaseJoints = FindTransformsWithTag("ThumbBase");
         thumbEndJoints = FindTransformsWithTag("ThumbEnd");
-        palmJoints = FindTransformsWithTag("Palm");
     }
 
     // Helper to find all Transforms with a given tag
@@ -68,28 +65,26 @@ public class ArmGraspAgent : Agent
     {
         // Reset contact flags
         fingerBaseInContact = fingerMidInContact = fingerEndInContact = false;
-        thumbBaseInContact = thumbEndInContact = palmInContact = false;
+        thumbBaseInContact = thumbEndInContact = false;
 
         fingerBaseHad = fingerMidHad = fingerEndHad = false;
-        thumbBaseHad = thumbEndHad = palmHad = false;
+        thumbBaseHad = thumbEndHad = false;
     }
 
     private void FixedUpdate()
     {
         // Clear per‑step reward guards
-        fbRewarded = fmRewarded = feRewarded =
-        tbRewarded = teRewarded = pRewarded = false;
+        fbRewarded = fmRewarded = feRewarded = tbRewarded = teRewarded = false;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // 6 booleans, one per tag
+        // 5 booleans, one per tag
         sensor.AddObservation(fingerBaseInContact ? 1f : 0f);
         sensor.AddObservation(fingerMidInContact ? 1f : 0f);
         sensor.AddObservation(fingerEndInContact ? 1f : 0f);
         sensor.AddObservation(thumbBaseInContact ? 1f : 0f);
         sensor.AddObservation(thumbEndInContact ? 1f : 0f);
-        sensor.AddObservation(palmInContact ? 1f : 0f);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -104,7 +99,6 @@ public class ArmGraspAgent : Agent
         RotateGroup(fingerEndJoints, a[2], dt);
         RotateGroup(thumbBaseJoints, a[3], dt);
         RotateGroup(thumbEndJoints, a[4], dt);
-        RotateGroup(palmJoints, a[5], dt);
     }
 
     // Rotate every transform in the group around its X‑axis
@@ -118,17 +112,18 @@ public class ArmGraspAgent : Agent
     private void OnCollisionStay(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Cylinder")) return;
+        Debug.Log("First contact with cylinder!");
 
         float dt = Time.fixedDeltaTime;
         float rb = baseContRate * dt;
         float rm = midContRate * dt;
         float re = endContRate * dt;
         float rt = thumbContRate * dt;
-        float rp = palmContRate * dt;
 
         foreach (var cp in collision.contacts)
         {
             if (cp.thisCollider == null) continue;
+            Debug.Log($"Contact with {cp.thisCollider.name}, tag = {cp.thisCollider.tag}");
             switch (cp.thisCollider.tag)
             {
                 case "FingerBase":
@@ -150,10 +145,6 @@ public class ArmGraspAgent : Agent
                 case "ThumbEnd":
                     ProcessContact(ref thumbEndInContact, ref thumbEndHad, ref teRewarded,
                                    thumbImmReward, rt);
-                    break;
-                case "Palm":
-                    ProcessContact(ref palmInContact, ref palmHad, ref pRewarded,
-                                   palmImmReward, rp);
                     break;
             }
         }
@@ -182,9 +173,6 @@ public class ArmGraspAgent : Agent
                     break;
                 case "ThumbEnd":
                     ProcessRelease(ref thumbEndInContact, ref thumbEndHad);
-                    break;
-                case "Palm":
-                    ProcessRelease(ref palmInContact, ref palmHad);
                     break;
             }
         }
