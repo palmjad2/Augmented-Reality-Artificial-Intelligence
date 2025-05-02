@@ -29,7 +29,7 @@ public class ArmGraspAgent : Agent
     private bool fbRewarded, fmRewarded, feRewarded;
     private bool tbRewarded, teRewarded, pRewarded;
 
-    // Reward constants
+    // Immediate Reward constants
     const float punishValue = -0.07f;
     const float baseImmReward = 0.15f;
     const float midImmReward = 0.10f;
@@ -37,6 +37,7 @@ public class ArmGraspAgent : Agent
     const float thumbImmReward = 0.20f;
     const float palmImmReward = 0.25f;
 
+    // Constant contact rewards
     const float baseContRate = 0.002f / 5f;
     const float midContRate = 0.0015f / 5f;
     const float endContRate = 0.001f / 5f;
@@ -114,6 +115,8 @@ public class ArmGraspAgent : Agent
         for (int i = 0; i < group.Length; i++)
             group[i].localRotation *= Quaternion.Euler(angle, 0f, 0f);
     }
+    
+    // Checks if it is in constant contact a rewards based on that.
 
     private void OnCollisionStay(Collision collision)
     {
@@ -159,7 +162,8 @@ public class ArmGraspAgent : Agent
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    // A function that checks collision is with cylinder and checks each collider on each part of the finger and gives a punishement.
+    private void OnCollisionExit(Collision collision) 
     {
         if (!collision.gameObject.CompareTag("Cylinder")) return;
 
