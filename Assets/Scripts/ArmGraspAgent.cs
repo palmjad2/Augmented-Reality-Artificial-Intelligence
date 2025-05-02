@@ -106,7 +106,7 @@ public class ArmGraspAgent : Agent
     {
         float angle = action * rotationSpeed * dt;
         for (int i = 0; i < group.Length; i++)
-            group[i].localRotation *= Quaternion.Euler(angle, 0f, 0f);
+            group[i].localRotation *= Quaternion.Euler(0f, angle, 0f);
     }
 
     private void OnCollisionStay(Collision collision)
