@@ -190,6 +190,7 @@ public class ArmGraspAgent : Agent
         }
     }
 
+    // This funcntion differentiates punishment of removal from intial non-contact.
     void ProcessContact(
         ref bool inContact,
         ref bool hadContact,
@@ -198,7 +199,7 @@ public class ArmGraspAgent : Agent
         float continuousReward
     )
     {
-        if (!inContact)
+        if (!inContact) // Sets the default state of contact to true after initla contact
         {
             inContact = true;
             hadContact = true;
@@ -211,7 +212,7 @@ public class ArmGraspAgent : Agent
         }
     }
 
-    void ProcessRelease(ref bool inContact, ref bool hadContact)
+    void ProcessRelease(ref bool inContact, ref bool hadContact) // Punishement for release
     {
         if (inContact && hadContact)
             AddReward(punishValue);
