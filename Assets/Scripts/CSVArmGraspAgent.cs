@@ -3,7 +3,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
-public class ArmGraspAgent : Agent
+public class CSVArmGraspAgent : Agent
 {
     [Header("Rotation Settings")]
     [Tooltip("Degrees of rotation per action unit.")]
