@@ -1,0 +1,65 @@
+{
+    "Prosthetic": {
+        "checkpoints": [
+            {
+                "steps": 499968,
+                "file_path": "results\\pun_prs_02\\Prosthetic\\Prosthetic-499968.onnx",
+                "reward": null,
+                "creation_time": 1746084112.894284,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_02\\Prosthetic\\Prosthetic-499968.pt"
+                ]
+            },
+            {
+                "steps": 999936,
+                "file_path": "results\\pun_prs_02\\Prosthetic\\Prosthetic-999936.onnx",
+                "reward": null,
+                "creation_time": 1746085270.0682693,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_02\\Prosthetic\\Prosthetic-999936.pt"
+                ]
+            },
+            {
+                "steps": 1499920,
+                "file_path": "results\\pun_prs_02\\Prosthetic\\Prosthetic-1499920.onnx",
+                "reward": 0.4566200580447912,
+                "creation_time": 1746086452.9892957,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_02\\Prosthetic\\Prosthetic-1499920.pt"
+                ]
+            },
+            {
+                "steps": 1999888,
+                "file_path": "results\\pun_prs_02\\Prosthetic\\Prosthetic-1999888.onnx",
+                "reward": null,
+                "creation_time": 1746087634.0982428,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_02\\Prosthetic\\Prosthetic-1999888.pt"
+                ]
+            },
+            {
+                "steps": 2001296,
+                "file_path": "results\\pun_prs_02\\Prosthetic\\Prosthetic-2001296.onnx",
+                "reward": null,
+                "creation_time": 1746087634.2045207,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_02\\Prosthetic\\Prosthetic-2001296.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2001296,
+            "file_path": "results\\pun_prs_02\\Prosthetic.onnx",
+            "reward": null,
+            "creation_time": 1746087634.2045207,
+            "auxillary_file_paths": [
+                "results\\pun_prs_02\\Prosthetic\\Prosthetic-2001296.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.6.0+cpu"
+    }
+}

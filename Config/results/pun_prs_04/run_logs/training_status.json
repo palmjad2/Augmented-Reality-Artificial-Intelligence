@@ -1,0 +1,65 @@
+{
+    "Prosthetic": {
+        "checkpoints": [
+            {
+                "steps": 3999944,
+                "file_path": "results\\pun_prs_04\\Prosthetic\\Prosthetic-3999944.onnx",
+                "reward": 0.3275320241227746,
+                "creation_time": 1746132613.702422,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_04\\Prosthetic\\Prosthetic-3999944.pt"
+                ]
+            },
+            {
+                "steps": 4499888,
+                "file_path": "results\\pun_prs_04\\Prosthetic\\Prosthetic-4499888.onnx",
+                "reward": 0.27791004348546267,
+                "creation_time": 1746133799.7282975,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_04\\Prosthetic\\Prosthetic-4499888.pt"
+                ]
+            },
+            {
+                "steps": 4999920,
+                "file_path": "results\\pun_prs_04\\Prosthetic\\Prosthetic-4999920.onnx",
+                "reward": null,
+                "creation_time": 1746134983.3393874,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_04\\Prosthetic\\Prosthetic-4999920.pt"
+                ]
+            },
+            {
+                "steps": 5499992,
+                "file_path": "results\\pun_prs_04\\Prosthetic\\Prosthetic-5499992.onnx",
+                "reward": 0.27901202253997326,
+                "creation_time": 1746136167.3663137,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_04\\Prosthetic\\Prosthetic-5499992.pt"
+                ]
+            },
+            {
+                "steps": 5568040,
+                "file_path": "results\\pun_prs_04\\Prosthetic\\Prosthetic-5568040.onnx",
+                "reward": null,
+                "creation_time": 1746136449.314115,
+                "auxillary_file_paths": [
+                    "results\\pun_prs_04\\Prosthetic\\Prosthetic-5568040.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 5568040,
+            "file_path": "results\\pun_prs_04\\Prosthetic.onnx",
+            "reward": null,
+            "creation_time": 1746136449.314115,
+            "auxillary_file_paths": [
+                "results\\pun_prs_04\\Prosthetic\\Prosthetic-5568040.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.6.0+cpu"
+    }
+}
