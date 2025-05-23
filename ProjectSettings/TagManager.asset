@@ -11,6 +11,18 @@ TagManager:
   - FingerEnd
   - FingerMiddle
   - FingerBase
+  - indexBase
+  - indexMiddle
+  - indexEnd
+  - middleBase
+  - middleMiddle
+  - middleEnd
+  - ringBase
+  - ringMiddle
+  - ringEnd
+  - pinkyBase
+  - pinkyMiddle
+  - pinkyEnd
   layers:
   - Default
   - TransparentFX

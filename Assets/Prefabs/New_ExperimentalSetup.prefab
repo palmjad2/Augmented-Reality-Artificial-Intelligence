@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 5385275839954989087}
   m_Layer: 0
   m_Name: Pinky2.r
-  m_TagString: FingerMiddle
+  m_TagString: pinkyMiddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -357,14 +357,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794120853609372884}
-  m_LocalRotation: {x: 0.10203065, y: -0.19881235, z: 0.09148132, w: 0.97040945}
+  m_LocalRotation: {x: 0.09291468, y: -0.20323256, z: 0.13537058, w: 0.96526587}
   m_LocalPosition: {x: 0.00003349712, y: 0.0007572145, z: -0.000033980396}
   m_LocalScale: {x: 1, y: 0.9999997, z: 0.9999998}
   m_Children:
   - {fileID: 6509192686424475585}
   m_Father: {fileID: 888910600202631968}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 13.556, y: -22.192, z: 8.1}
+  m_LocalEulerAnglesHint: {x: 13.556, y: -22.192, z: 13.296}
 --- !u!136 &5385275839954989087
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 36
+    VectorObservationSize: 70
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 5
@@ -751,7 +751,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 4000
   rotationSpeed: 90
 --- !u!54 &7443026144701839736
 Rigidbody:
@@ -795,7 +795,7 @@ GameObject:
   - component: {fileID: 1791824828937185176}
   m_Layer: 0
   m_Name: Middle1.r
-  m_TagString: FingerBase
+  m_TagString: middleBase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1096,7 +1096,7 @@ GameObject:
   - component: {fileID: 5943346647426933408}
   m_Layer: 0
   m_Name: Pointer3.r
-  m_TagString: FingerEnd
+  m_TagString: indexEnd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1200,7 +1200,7 @@ GameObject:
   - component: {fileID: 6606813003758058512}
   m_Layer: 0
   m_Name: Middle3.r
-  m_TagString: FingerEnd
+  m_TagString: middleEnd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1213,7 +1213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4779771907156680071}
   m_LocalRotation: {x: 0.00039813475, y: -0.000018966373, z: -0.116889596, w: 0.99314487}
-  m_LocalPosition: {x: -0, y: 0.00096781825, z: -5.0291415e-10}
+  m_LocalPosition: {x: -0, y: 0.00096781825, z: 0}
   m_LocalScale: {x: 0.9999998, y: 0.9999997, z: 0.99999994}
   m_Children:
   - {fileID: 4389731642284854500}
@@ -1246,7 +1246,7 @@ GameObject:
   - component: {fileID: 1534590578969394426}
   m_Layer: 0
   m_Name: Pinky1.r
-  m_TagString: FingerBase
+  m_TagString: pinkyBase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1258,14 +1258,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5034793492648853783}
-  m_LocalRotation: {x: -0.12600723, y: 0.28319797, z: -0.50111765, w: -0.80796176}
+  m_LocalRotation: {x: -0.06618936, y: 0.318069, z: -0.4548729, w: -0.8291813}
   m_LocalPosition: {x: 0.00034222443, y: 0.0031870871, z: -0.0008581289}
   m_LocalScale: {x: 0.9999998, y: 1, z: 1}
   m_Children:
   - {fileID: 1168562528485288670}
   m_Father: {fileID: 4629925013243457586}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 29.173, y: -22.301, z: -302.256}
+  m_LocalEulerAnglesHint: {x: 23.524, y: -30.638, z: -309.032}
 --- !u!136 &1534590578969394426
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1473,7 +1473,7 @@ GameObject:
   - component: {fileID: 4682953925619516660}
   m_Layer: 0
   m_Name: Pointer1.r
-  m_TagString: FingerBase
+  m_TagString: indexBase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1519,7 +1519,7 @@ GameObject:
   - component: {fileID: 5938310198666771321}
   m_Layer: 0
   m_Name: Middle2.r
-  m_TagString: FingerMiddle
+  m_TagString: middleMiddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1565,7 +1565,7 @@ GameObject:
   - component: {fileID: 5152765399432409159}
   m_Layer: 0
   m_Name: Pinky3.r
-  m_TagString: FingerEnd
+  m_TagString: pinkyEnd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1577,14 +1577,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6307447938148366661}
-  m_LocalRotation: {x: 0.076463886, y: -0.064040914, z: -0.05224738, w: 0.99364096}
+  m_LocalRotation: {x: 0.07894196, y: -0.06096016, z: -0.0915867, w: 0.99078953}
   m_LocalPosition: {x: -0.000002158864, y: 0.00076560944, z: -0.000015175861}
   m_LocalScale: {x: 0.99999994, y: 1, z: 0.9999998}
   m_Children:
   - {fileID: 3532989430603950709}
   m_Father: {fileID: 1168562528485288670}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 8.353, y: -7.857, z: -6.595}
+  m_LocalEulerAnglesHint: {x: 8.353, y: -7.857, z: -11.137}
 --- !u!136 &5152765399432409159
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1611,7 +1611,7 @@ GameObject:
   - component: {fileID: 7811398409024409199}
   m_Layer: 0
   m_Name: Ring1.r
-  m_TagString: FingerBase
+  m_TagString: ringBase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1780,7 +1780,7 @@ GameObject:
   - component: {fileID: 7698656068792562556}
   m_Layer: 0
   m_Name: Ring3.r
-  m_TagString: FingerEnd
+  m_TagString: ringEnd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2198,7 +2198,7 @@ GameObject:
   - component: {fileID: 7606699540137502059}
   m_Layer: 0
   m_Name: Pointer2.r
-  m_TagString: FingerMiddle
+  m_TagString: indexMiddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2444,7 +2444,7 @@ GameObject:
   - component: {fileID: 8636202617860290608}
   m_Layer: 0
   m_Name: ring2.r
-  m_TagString: FingerMiddle
+  m_TagString: ringMiddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

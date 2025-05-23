@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1747976703",
+        "python_version": "3.9.13 (main, Oct 13 2022, 21:23:06) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Jsplr\\anaconda3\\envs\\arai\\Scripts\\mlagents-learn ./trainer_config.yaml --run-id prs_obs_01",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.6.0+cpu",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1747976764"
+    },
+    "total": 61.606865199999994,
+    "count": 1,
+    "self": 0.008543499999994708,
+    "children": {
+        "run_training.setup": {
+            "total": 0.06763010000000014,
+            "count": 1,
+            "self": 0.06763010000000014
+        },
+        "TrainerController.start_learning": {
+            "total": 61.5306916,
+            "count": 1,
+            "self": 0.00017689999999248585,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 61.530454999999996,
+                    "count": 1,
+                    "self": 61.530454999999996
+                },
+                "TrainerController._save_models": {
+                    "total": 5.970000000843356e-05,
+                    "count": 1,
+                    "self": 5.970000000843356e-05
+                }
+            }
+        }
+    }
+}
