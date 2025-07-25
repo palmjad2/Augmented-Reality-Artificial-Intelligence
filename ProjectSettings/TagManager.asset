@@ -23,6 +23,8 @@ TagManager:
   - pinkyBase
   - pinkyMiddle
   - pinkyEnd
+  - thumbBase
+  - thumbEnd
   layers:
   - Default
   - TransparentFX
