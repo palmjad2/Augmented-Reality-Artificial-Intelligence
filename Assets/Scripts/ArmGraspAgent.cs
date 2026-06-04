@@ -9,6 +9,12 @@ public class ArmGraspAgent : Agent
     [Tooltip("Degrees of rotation per action unit.")]
     public float rotationSpeed = 90f;
 
+    //–– Superquadric shape parameters ––
+    public float sq_a1, sq_a2, sq_a3;
+    public float sq_e1, sq_e2;
+    public float sq_tx, sq_ty, sq_tz;
+    public float sq_rx, sq_ry, sq_rz;
+
     // Private arrays of Transforms, filled at runtime by tag
     private Transform[] fingerBaseJoints;
     private Transform[] fingerMidJoints;
@@ -91,6 +97,32 @@ public class ArmGraspAgent : Agent
         sensor.AddObservation(thumbBaseInContact ? 1f : 0f);
         sensor.AddObservation(thumbEndInContact ? 1f : 0f);
         sensor.AddObservation(palmInContact ? 1f : 0f);
+
+        // Superquadric shape parameters (11 values)
+        // Set externally by SuperquadricClient.cs
+        sensor.AddObservation(sq_a1);
+        sensor.AddObservation(sq_a2);
+        sensor.AddObservation(sq_a3);
+        sensor.AddObservation(sq_e1);
+        sensor.AddObservation(sq_e2);
+        sensor.AddObservation(sq_tx);
+        sensor.AddObservation(sq_ty);
+        sensor.AddObservation(sq_tz);
+        sensor.AddObservation(sq_rx);
+        sensor.AddObservation(sq_ry);
+        sensor.AddObservation(sq_rz);
+    }
+
+    public void SetSuperquadricParams(
+        float a1, float a2, float a3,
+        float e1, float e2,
+        float tx, float ty, float tz,
+        float rx, float ry, float rz)
+    {
+        sq_a1 = a1; sq_a2 = a2; sq_a3 = a3;
+        sq_e1 = e1; sq_e2 = e2;
+        sq_tx = tx; sq_ty = ty; sq_tz = tz;
+        sq_rx = rx; sq_ry = ry; sq_rz = rz;
     }
 
     public override void OnActionReceived(ActionBuffers actions)
