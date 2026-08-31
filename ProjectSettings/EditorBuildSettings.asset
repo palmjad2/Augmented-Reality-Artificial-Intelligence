@@ -7,5 +7,7 @@ EditorBuildSettings:
   m_Scenes: []
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: cd6f46f86e808d447b8247b9819bfd15, type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 2c6921a0cc04ef54f9fdaf34dce21b0a, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e44ad74985d6c784594248754f32da10, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: c3568ca70a4e7be419b7ae38c297a40e, type: 2}
+  m_UseUCBPForAssetBundles: 0

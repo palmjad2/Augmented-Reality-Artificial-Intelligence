@@ -165,6 +165,11 @@ public class ThalmicMyo : MonoBehaviour {
         }
     }
 
+    // TODO(fix): With `using UnityEngine;` above, unqualified `Object` binds to
+    // UnityEngine.Object, so this allocates a Unity engine object just to lock on.
+    // Not a compile error (compiles in 2020.3 and 6.3), so left unchanged here —
+    // vendor (Thalmic Myo) code, needs sign-off. Intended: `readonly object _lock = new object();`
+    // See COMPILE_ERRORS.md (MF-2).
     private Object _lock = new Object();
 
     private bool _myoArmSynced = false;
