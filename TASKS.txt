@@ -1,0 +1,28 @@
+In the ARAI Unity project at:
+C:\Users\chris\Augmented-Reality-Artificial-Intelligence
+
+The ML-Agents package was just upgraded from 2.0.2 to 3.0.0. 
+This broke all Agent scripts because the API changed. 
+
+Read every .cs file in Assets/Scripts/ that inherits from 
+Agent and fix all breaking changes for ML-Agents 3.0.0:
+
+Key API changes in 3.0.0:
+- using Unity.MLAgents replaces using MLAgents
+- using Unity.MLAgents.Actuators is required for ActionBuffers
+- using Unity.MLAgents.Sensors is required for VectorSensor
+- OnActionReceived(float[] vectorAction) → 
+  OnActionReceived(ActionBuffers actions)
+- actions.ContinuousActions[i] replaces vectorAction[i]
+- CollectObservations() → CollectObservations(VectorSensor sensor)
+- AddVectorObs() → sensor.AddObservation()
+- GiveLikelyRewardForPotentialAction removed — use AddReward()
+- AgentReset() → OnEpisodeBegin()
+- Done() → EndEpisode()
+
+Fix every instance of these in all Agent scripts. Do not 
+change any game logic, reward values, or observations — 
+only update API calls to match 3.0.0 syntax.
+
+Document all changes in MLAGENTS_UPGRADE.md.
+Do not touch .unity or .prefab files.

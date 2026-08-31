@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "unity": {
+      "type": "stdio",
+      "command": "unity",
+      "args": [
+        "mcp",
+        "--project-path",
+        "C:\\Users\\chris\\Augmented-Reality-Artificial-Intelligence"
+      ]
+    }
+  }
+}
