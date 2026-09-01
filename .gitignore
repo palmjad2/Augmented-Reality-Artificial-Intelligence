@@ -68,3 +68,12 @@
 *.vscode/
 
 .DS_Store
+
+# ML-Agents standalone training builds
+/Builds/
+
+# model rollback copy made by tools/deploy_model.cmd
+Assets/Models/*.onnx.bak
+
+# ML-Agents training output
+/results/

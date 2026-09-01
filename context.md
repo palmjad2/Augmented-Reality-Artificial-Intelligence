@@ -52,12 +52,12 @@ Read this first, then skim `MLAGENTS_UPGRADE.md` (addendum at bottom) if you tou
 - **Unity Editor is running** with this project open (launched via `unity open`, started ~4:21 PM Aug 31).
   Pipeline server on port 7800, `unity status` = ready. Console: 2 warnings (Input Manager deprecation,
   URP Global Settings created) + 1 pre-existing error "Blender could not be found" (a `.blend` asset, no Blender installed).
-- **Nothing was committed.** Uncommitted working tree includes many changes that pre-date this session
+- **Committed Aug 31 (3rd session)** as `d941b43` + `e124d90` (see item 5). Before that, the uncommitted tree included many changes that pre-date this session
   (Unity 6 / URP / OpenXR migration, scene edits, package upgrades) plus this session's:
   - `Packages/manifest.json` (+`com.unity.pipeline`, ml-agents 4.1.0, −sentis) and `Packages/packages-lock.json`
   - new `.mcp.json` (should be committed — it's the shared MCP config)
   - `MLAGENTS_UPGRADE.md` addendum, this `context.md`
-- Tooling present: Node 24.16, Python 3.14.6 (system; **no `mlagents` installed**), dotnet, winget, Unity Hub 3.18.3.
+- Tooling present: Node 24.16, Python 3.14.6 + 3.12 + **3.10.11** (`mlagents 1.2.0.dev0` lives in `C:\Users\chris\ml-agents\venv`, see item 3), dotnet, winget, Unity Hub 3.18.3.
 - Persistent memory for this project already has a note: `unity-cli-mcp-setup` (in the Claude memory dir).
 
 ---
@@ -96,11 +96,16 @@ Read this first, then skim `MLAGENTS_UPGRADE.md` (addendum at bottom) if you tou
    They show up as `unity:<skill>` after a Claude Code **restart** (skills load at session start).
    Update later with `claude plugin update unity@unity-agent-plugin`.
 2. ~~**Approve the `unity` MCP server**~~ **DONE** — approved; `editor_status` → ready, 6000.3.18f1, project open.
-3. **Python trainer**: install the `mlagents` release that pairs with package **4.1.0** (4.1.0 moved
-   gym→gymnasium, torch ~2.8). The package's Installation page still shows `mlagents==1.1.0`, which is the
-   older 3.0.0-era pairing — confirm the right version in the ML-Agents GitHub release history before training.
-   `config/trainer_config.yaml` (behavior `Prosthetic`, PPO) needs no change.
+3. ~~**Python trainer**~~ **DONE (Aug 31, 3rd session).** No PyPI release pairs with package 4.x; installed the
+   source trainer from `develop` (`mlagents 1.2.0.dev0`) in a Python 3.10.11 venv at `C:\Users\chris\ml-agents\venv`.
+   Smoke run handshook (pkg 4.1.0 / comm 1.5.0) and reached Step 10000 (mean reward 0.543). Details in
+   `MLAGENTS_UPGRADE.md` (trainer addendum). **Fastest training (3.4x Editor)**: headless build `Builds\Prosthetic\Prosthetic.exe` +
+   `--num-envs 8 --no-graphics` (see the parallel-env section of `MLAGENTS_UPGRADE.md`). GPU/CUDA benchmarked slower in
+   every configuration (`venv-cuda` exists but unused). Standalone XR init-on-startup disabled for headless players.
+   **Inference in Editor fixed** (Inference Device ComputeShader→Default on both BehaviorParameters; scene saved).
+   Trained models reach the Editor only via `tools\deploy_model.cmd <run-id>` (copies results\<id>\Prosthetic.onnx →
+   Assets\Models\Prosthetic.onnx). The committed Assets/Models/Prosthetic.onnx is the old June-19 model.
 4. Optional cleanup: `com.unity.ide.vscode` is deprecated (Editor warning); the Input Manager deprecation
    warning suggests eventually moving to the Input System package (already in manifest, 1.11.2).
-5. Consider committing this session's config changes (`.mcp.json`, manifest/lock, docs) separately from the
-   large pre-existing migration diff.
+5. ~~Commit split~~ **DONE (Aug 31, 3rd session):** `d941b43` chore: tooling + ML-Agents 4.1.0 fix; `e124d90` chore: Unity 6 /
+   URP / OpenXR migration. Only `UserSettings/Layouts/`, `Search.index`, `Search.settings` left untracked (per-user artifacts).
